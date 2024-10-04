@@ -18,7 +18,7 @@ functions:
     operation: sysout
   - name: getRnd
     type: custom
-    operation: rest:get:http://www.randomnumberapi.com/api/v1.0/randomnumber                         
+    operation: "rest:get:http://www.randomnumberapi.com/api/v1.0/randomnumber"
 states:
   - name: ChooseOnState
     type: switch
