@@ -16,23 +16,36 @@ functions:
   - name: logFunction
     type: custom
     operation: sysout
+  - name: getRnd
+    type: custom
+    operation: rest:get:http://www.randomnumberapi.com/api/v1.0/randomnumber                         
 states:
   - name: ChooseOnState
     type: switch
     dataConditions:
       - condition: ${ .state == "Wait" }
-        transition: WaitFlow
+        transition: TmpState
       - condition: ${ .state == "Error" }
         transition: ErrorFlow
     defaultCondition:
-      transition: WaitFlow
+      transition: TmpState
+  - name: TmpState
+    type: operation
+    actions:
+      - functionRef:
+          refName: getRnd
+        actionDataFilter:
+          toStateData: .getRndRes
+    stateDataFilter:
+      output: ".getRndRes"
+    transition: WaitFlow 
   - name: WaitFlow
     type: inject
     data:
       result:
         outputs:
           - key: dataFeed
-            value: This string is produced while waiting and will be replaced by later output
+            value: .getRndRes
     transition: WaitTimeout
   - name: WaitTimeout
     type: callback
