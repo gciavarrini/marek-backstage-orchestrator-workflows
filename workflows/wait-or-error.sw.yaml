@@ -36,8 +36,6 @@ states:
           refName: getRnd
         actionDataFilter:
           toStateData: .getRndRes
-    stateDataFilter:
-      output: ".getRndRes"
     transition: WaitFlow 
   - name: WaitFlow
     type: inject
